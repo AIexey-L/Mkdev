@@ -29,7 +29,7 @@ content.each do |line|
 end
 
 def star_rating (rating) # convert float rating into stars
-  "*"*((rating - 8)*10)
+  "*"*(((rating - 8)*10)+1)
 end
 
 relevant_movies = []
