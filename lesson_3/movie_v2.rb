@@ -32,55 +32,41 @@ def star_rating (rating) # convert float rating into stars
   "*"*(((rating - 8)*10)+1)
 end
 
-film_hash = Hash.new(0)
-array_of_hashes = []
-categories = ["link", "name", "year", "country", "year_of_smth", "genre", "length", "rating", "director", "actors"]
+# array with names of categories
+categories = [:link, :name, :year, :country, :year_of_smth, :genre, :length, :rating, :director, :actors]
 categorized_arr = []
+array_of_hashes = []
 
-splited.each do |film|
+
+splited.each do |film| # each film array merges with category names from another array named "categories"
   categorized_arr.push(categories.zip(film))
 end
 
-categorized_arr.each do |film|
+categorized_arr.each do |film| # resulting array with category names converts to array of hashes  with category names as keys
   array_of_hashes.push(film.to_h)
 end
 
-p array_of_hashes
-#
-# array_of_hashes = Array.new
-# x = 0
-# film_arr = []
-# def array_to_hash (array)
-#   if  x < array.length
-#     film_arr = array.with_index[x]
-#     film_hash[:index] = x
-#     film_hash[:link] = film_arr[0]
-#     film_hash[:name] = film_arr[1]
-#     film_hash[:year] = film_arr[2]
-#     film_hash[:country] = film_arr[3]
-#     film_hash[:year_of_smth] = film_arr[4]
-#     film_hash[:genre] = film_arr[5]
-#     film_hash[:length] = film_arr[6]
-#     film_hash[:rating] = film_arr[7]
-#     film_hash[:director] = film_arr[8]
-#     film_hash[:actors] = film_arr[9]
-#     array_of_hashes = f
-#
+# p array_of_hashes
+
+# array_of_hashes.each
+
+# x=0
+
+# array_of_hashes.
+
+arr_five_longest = array_of_hashes.max_by(5) {|key| key[:length].split(//).map {|x| x[/\d+/]}.compact.join("").to_i}
+
+p arr_five_longest
+
+# def five_longest (arr)
+#   while x < 5
+#     arr.select()
 #   end
 # end
 
-
-# array_of_hashes(splited)
-#
 # p array_of_hashes
+# p film_hash
 #
-#
-# p splited
-# def arr_to_h (arr)
-
-
-# p array_of_hashes
-# pfilm_hash
 # relevant_movies = []
 # splited.each do |film| # pick relevant movie(s) with certain criteria
 #   string = film.join(" ")
@@ -93,7 +79,7 @@ p array_of_hashes
 # puts format("%30s | %s", "Movie", "Rating")
 # puts "-"*50
 # relevant_movies.each { |movie| puts format("%30s | %s", "#{movie[0]}", "#{movie[1]}")}
-
-
+#
+#
 # File и String - это классы объектов Ryby. Имеюют встроенные методы.
 # Опредеоить коасс любого объекта в Ruby можно методом .class (puts <somthing>.class)
