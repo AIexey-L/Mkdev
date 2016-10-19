@@ -33,7 +33,7 @@ def star_rating (rating) # convert float rating into stars
 end
 
 # array with names of categories
-categories = [:link, :name, :year, :country, :year_of_smth, :genre, :length, :rating, :director, :actors]
+categories = [:link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors]
 categorized_arr = []
 array_of_hashes = []
 
@@ -46,40 +46,39 @@ categorized_arr.each do |film| # resulting array with category names converts to
   array_of_hashes.push(film.to_h)
 end
 
-# p array_of_hashes
+# output method for arrays
+def nice_output (arr)
+  arr.each { |x| puts "#{x[:name]} (#{x[:release_date]}; #{x[:genre]}) - #{x[:length]} "}
+end
 
-# array_of_hashes.each
 
-# x=0
-
-# array_of_hashes.
-
+# 5 longest movies, length converted from "99 min"(string) to 99(integer)
 arr_five_longest = array_of_hashes.max_by(5) {|key| key[:length].split(//).map {|x| x[/\d+/]}.compact.join("").to_i}
 
-p arr_five_longest
+# 10 comedies, realise date convert from "2010-06-18" (string) to 20100618(integer)
+arr_ten_comedies = array_of_hashes.find_all {|key| key[:genre].include?("Comedy")}.max_by(10) {|x| x[:release_date].split(//).map {|x| x[/\d+/]}.compact.join("").to_i}
 
-# def five_longest (arr)
-#   while x < 5
-#     arr.select()
-#   end
-# end
+# make an array of directors sorted by last word (family name)
+directors = array_of_hashes.map { |x| x[:director]}.uniq.sort_by { |x| x.split.last }
 
-# p array_of_hashes
-# p film_hash
-#
-# relevant_movies = []
-# splited.each do |film| # pick relevant movie(s) with certain criteria
-#   string = film.join(" ")
-#   if string.include? ("Time")
-#     relevant_movies.push([film[1], star_rating(film[7].to_f)]) # make arrays with movie names and ratings
-#   end
-# end
-#
-#
-# puts format("%30s | %s", "Movie", "Rating")
-# puts "-"*50
-# relevant_movies.each { |movie| puts format("%30s | %s", "#{movie[0]}", "#{movie[1]}")}
-#
-#
-# File и String - это классы объектов Ryby. Имеюют встроенные методы.
-# Опредеоить коасс любого объекта в Ruby можно методом .class (puts <somthing>.class)
+# return number of non-USA movies
+number_of_nonusa = array_of_hashes.reject { |x| x[:country].include? ("USA")}.count
+
+
+# Output results
+puts ""
+puts "5 longest movies:"
+puts ""
+nice_output(arr_five_longest)
+puts ""
+puts "10 most recent comedies"
+puts ""
+nice_output(arr_ten_comedies)
+puts ""
+puts "Number of non-USA movies: #{number_of_nonusa}"
+puts ""
+puts "List of Directors in alphabetical order"
+puts ""
+directors.each { |x| print "#{x}; "}
+
+
