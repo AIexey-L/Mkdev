@@ -1,4 +1,5 @@
 
+
 input = ARGV.join # make string input (ARGV an array)
 filename = "movies.txt"
 
@@ -16,27 +17,21 @@ unless File.exist?(filename) # puts readable comment if file don't exist
   puts "+"*100
   puts "~"*100
 end
-
+# array with names of FIELDS
+FIELDS = %i[ link name year country release_date genre length rating director actors ]
 # splitted array of movies, IO.foreach reads file line-by-line processing by block
-splited = IO.foreach(filename).map { |x| x.chomp.to_s.split("|")}
+array_of_hashes = IO.foreach(filename).map { |x| FIELDS.zip(x.chomp.to_s.split("|")).to_h}
 
 def star_rating (rating) # convert float rating into stars
   "*"*(((rating - 8)*10)+1)
 end
 
-# array with names of fields
-fields = [:link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors]
-
-# convert array of arrays into array of hashes with key names from fields array
-array_of_hashes = splited.map { |x| fields.zip(x).to_h}
-
-# output method for arrays
 def nice_output (arr)
   arr.each { |x| puts "#{x[:name]} (#{x[:release_date]}; #{x[:genre]}) - #{x[:length]} "}
 end
 
-# 5 longest movies, length converted from "99 min"(string) to 99(integer)
-arr_five_longest = array_of_hashes.max_by(5) {|key| key[:length].split(//).map {|x| x[/\d+/]}.compact.join("").to_i}
+# 5 longest movies don't need to converted  to integer for sorting
+arr_five_longest = array_of_hashes.max_by(5) {|key| key[:length].to_i}
 
 # most resent 10 comedies, sort by date (don't need to convert date into integers)
 arr_ten_comedies = array_of_hashes.find_all {|key| key[:genre].include?("Comedy")}.max_by(10) {|x| x[:release_date]}
