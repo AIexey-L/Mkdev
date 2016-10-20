@@ -8,14 +8,7 @@ unless input == "" # in case of empty filename default file loads
 end
 
 unless File.exist?(filename) # puts readable comment if file don't exist
-  puts "_"*100
-  puts "*"*100
-  puts " "*100
-  puts "THERE IS NO FILE NAMED: #{filename}, PLEASE, ENTER VALID FILENAME OR SKIP ENTERING AND START PROGRAMM."
-  puts "IF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED WITH DEFAULT FILE: movies.txt"
-  puts " "*100
-  puts "+"*100
-  puts "~"*100
+  abort "\n\nTHERE IS NO FILE NAMED: #{filename}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\nWITH DEFAULT FILE: movies.txt\n\n"
 end
 # array with names of FIELDS
 FIELDS = %i[ link name year country release_date genre length rating director actors ]
