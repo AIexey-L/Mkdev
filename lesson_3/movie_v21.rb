@@ -1,7 +1,7 @@
 
-input = ARGV.join # make string input (ARGV an array)
+input = ARGV.first # make string input (ARGV an array)
 
-input != "" || input = "movies.txt" # in case of empty filename default file loads
+input || input = "movies.txt" # in case of empty filename default file loads
 
 File.exist?(input) || abort("\n\nTHERE IS NO FILE NAMED: #{input.to_s}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
 
