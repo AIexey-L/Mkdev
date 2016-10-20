@@ -1,19 +1,14 @@
 
-
 input = ARGV.join # make string input (ARGV an array)
-filename = "movies.txt"
 
-unless input == "" # in case of empty filename default file loads
-  filename = input
-end
+input != "" || input = "movies.txt" # in case of empty filename default file loads
 
-unless File.exist?(filename) # puts readable comment if file don't exist
-  abort "\n\nTHERE IS NO FILE NAMED: #{filename}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\nWITH DEFAULT FILE: movies.txt\n\n"
-end
+File.exist?(input) || abort("\n\nTHERE IS NO FILE NAMED: #{input.to_s}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
+
 # array with names of FIELDS
 FIELDS = %i[ link name year country release_date genre length rating director actors ]
 # splitted array of movies, IO.foreach reads file line-by-line processing by block
-array_of_hashes = IO.foreach(filename).map { |x| FIELDS.zip(x.chomp.to_s.split("|")).to_h}
+array_of_hashes = IO.foreach(input).map { |x| FIELDS.zip(x.chomp.to_s.split("|")).to_h}
 
 def star_rating (rating) # convert float rating into stars
   "*"*(((rating - 8)*10)+1)
