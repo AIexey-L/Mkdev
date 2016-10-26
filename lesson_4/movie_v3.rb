@@ -1,84 +1,66 @@
+require 'csv'
+require 'ostruct'
 
-input = ARGV.join # make
-filename = "movies.txt"
+input = ARGV.first # make string input (ARGV an array)
 
-unless input == "" # in case of empty filename default file loads
-  filename = input
-end
+input || input = "movies.txt" # in case of empty filename default file loads
 
-unless File.exist?(filename) # puts readable comment if file don't exist
-  puts "_"*100
-  puts "*"*100
-  puts " "*100
-  puts "THERE IS NO FILE NAMED: #{filename}, PLEASE, ENTER VALID FILENAME OR SKIP ENTERING AND START PROGRAMM."
-  puts "IF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED WITH DEFAULT FILE: movies.txt"
-  puts " "*100
-  puts "+"*100
-  puts "~"*100
-end
+File.exist?(input) || abort("\n\nTHERE IS NO FILE NAMED: #{input}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
+
+# array with names of FIELDS
+FIELDS = %i[ link name year country release_date genre length rating director actors ]
+# splitted array of movies, IO.foreach reads file line-by-line processing by block
+array_of_hashes = CSV.foreach(input, col_sep: "|", headers: FIELDS)
 
 
-content = []
-IO.foreach(filename) do |line| # IO.foreach reads file per line, less memory usage in case of big fle
-  content.push(line.chomp) # make a array of movies
-end
 
-splited = []
-content.each do |line|
-  splited.push(line.to_s.split("|")) # split arrays
-end
+new_array = array_of_hashes.each { |x| OpenStruct.new (x.to_a.to_h) }
+#
+# movies_list = OpenStruct.new()
 
-def star_rating (rating) # convert float rating into stars
-  "*"*(((rating - 8)*10)+1)
-end
-
-# array with names of categories
-categories = [:link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors]
-categorized_arr = []
-array_of_hashes = []
+p new_array []
 
 
-splited.each do |film| # each film array merges with category names from another array named "categories"
-  categorized_arr.push(categories.zip(film))
-end
+#ostruct_obj = array_of_hashes.each { |x| OpenStruct.new(x.to_h)}.
+#
+# # array_of_hashes.each do |row|
+# #   ostruct_obj << row
+# # end
+#
+# # ostruct_obj = OpenStruct.new(array_of_hashes.each { |x| x[:year] })
+# #
+#p ostruct_obj
 
-categorized_arr.each do |film| # resulting array with category names converts to array of hashes  with category names as keys
-  array_of_hashes.push(film.to_h)
-end
-
-# output method for arrays
-def nice_output (arr)
-  arr.each { |x| puts "#{x[:name]} (#{x[:release_date]}; #{x[:genre]}) - #{x[:length]} "}
-end
-
-
-# 5 longest movies, length converted from "99 min"(string) to 99(integer)
-arr_five_longest = array_of_hashes.max_by(5) {|key| key[:length].split(//).map {|x| x[/\d+/]}.compact.join("").to_i}
-
-# 10 comedies, realise date convert from "2010-06-18" (string) to 20100618(integer)
-arr_ten_comedies = array_of_hashes.find_all {|key| key[:genre].include?("Comedy")}.max_by(10) {|x| x[:release_date].split(//).map {|x| x[/\d+/]}.compact.join("").to_i}
-
-# make an array of directors sorted by last word (family name)
-directors = array_of_hashes.map { |x| x[:director]}.uniq.sort_by { |x| x.split.last }
-
-# return number of non-USA movies
-number_of_nonusa = array_of_hashes.reject { |x| x[:country].include? ("USA")}.count
-
-
-# Output results
-puts ""
-puts "5 longest movies:"
-puts ""
-nice_output(arr_five_longest)
-puts ""
-puts "10 most recent comedies"
-puts ""
-nice_output(arr_ten_comedies)
-puts ""
-puts "Number of non-USA movies: #{number_of_nonusa}"
-puts ""
-puts "List of Directors in alphabetical order"
-puts ""
-directors.each { |x| print "#{x}; "}
-
+# def star_rating (rating) # convert float rating into stars
+#   "*"*(((rating - 8)*10)+1)
+# end
+#
+# def nice_output (arr)
+#   arr.each { |x| puts "#{x[:name]} (#{x[:release_date]}; #{x[:genre]}) - #{x[:length]} "}
+# end
+#
+# puts array_of_hashes
+#
+# # 5 longest movies don't need to converted  to integer for sorting
+# arr_five_longest = array_of_hashes.max_by(5) {|key| key[:length].to_i}
+#
+# # most resent 10 comedies, sort by date (don't need to convert date into integers)
+# arr_ten_comedies = array_of_hashes.find_all {|key| key[:genre].include?("Comedy")}.max_by(10) {|x| x[:release_date]}
+#
+# # make an array of directors sorted by last word (family name)
+# directors = array_of_hashes.map { |x| x[:director]}.uniq.sort_by { |x| x.split.last }
+#
+# # return number of non-USA movies
+# number_of_nonusa = array_of_hashes.reject { |x| x[:country].include? ("USA")}.count
+#
+# # Output results
+# puts "\n\n5 longest movies:\n#{"*"*70}"
+# nice_output(arr_five_longest)
+# puts "\n\n10 most recent comedies\n#{"*"*70}"
+# nice_output(arr_ten_comedies)
+# puts "\n\nNumber of non-USA movies: #{number_of_nonusa}\n\n"
+# puts "\n\nList of Directors in alphabetical order\n#{"*"*70}"
+# directors.each { |x| print "#{x}; "}
+# puts "\n\n"
+#
 
