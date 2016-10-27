@@ -1,36 +1,38 @@
 require 'csv'
 require 'ostruct'
+require 'date'
 
-input = ARGV.first # make string input (ARGV an array)
-
-input || input = "movies.txt" # in case of empty filename default file loads
+input = ARGV.first || "movies.txt" # in case of empty filename default file loads
 
 File.exist?(input) || abort("\n\nTHERE IS NO FILE NAMED: #{input}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
 
 # array with names of FIELDS
 FIELDS = %i[ link name year country release_date genre length rating director actors ]
 
-array_of_ostructs = CSV.foreach(input, col_sep: "|", headers: FIELDS).map.each { |x| OpenStruct.new(x.to_h)}
+array_of_ostructs = CSV.foreach(input, col_sep: "|", headers: FIELDS).map { |x| OpenStruct.new(x.to_h)}
+
 
 def star_rating (rating) # convert float rating into stars
   "*"*(((rating - 8)*10)+1)
 end
 
 def nice_output (arr)
-  arr.each { |x| puts "#{x[:name]} (#{x[:release_date]}; #{x[:genre]}) - #{x[:length]} "}
+  arr.each { |field| puts "#{field.name} (#{field.release_date}; #{field.genre}) - #{field.length} "}
 end
 
 # 5 longest movies don't need to converted  to integer for sorting
-arr_five_longest = array_of_ostructs.max_by(5) {|key| key[:length].to_i}
+arr_five_longest = array_of_ostructs.max_by(5) {|field| field.length.to_i}
 
 # most resent 10 comedies, sort by date (don't need to convert date into integers)
-arr_ten_comedies = array_of_ostructs.find_all {|key| key[:genre].include?("Comedy")}.max_by(10) {|x| x[:release_date]}
+arr_ten_comedies = array_of_ostructs.find_all {|field| field.genre.include?("Comedy")}.max_by(10) {|field| field.release_date}
 
 # make an array of directors sorted by last word (family name)
-directors = array_of_ostructs.map { |x| x[:director]}.uniq.sort_by { |x| x.split.last }
+directors = array_of_ostructs.map { |field| field.director}.uniq.sort_by { |field| field.split.last }
 
 # return number of non-USA movies
-number_of_nonusa = array_of_ostructs.reject { |x| x[:country].include? ("USA")}.count
+number_of_nonusa = array_of_ostructs.reject { |field| field.country.include? ("USA")}.count
+
+
 
 # Output results
 puts "\n\n5 longest movies:\n#{"*"*70}"
