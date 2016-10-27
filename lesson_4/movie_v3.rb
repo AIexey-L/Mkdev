@@ -32,7 +32,12 @@ directors = array_of_ostructs.map { |field| field.director}.uniq.sort_by { |fiel
 # return number of non-USA movies
 number_of_nonusa = array_of_ostructs.reject { |field| field.country.include? ("USA")}.count
 
+array_dates = array_of_ostructs.reject { |field| field.release_date.to_s[8..9] == nil }.map { |field| Date.parse(field.release_date.to_s) }
+count = Hash.new(0)
+dates_stat = array_dates.map { |x| x.strftime ("%B") }.each { |x| count[x] += 1 }
 
+puts format("\n\n%30s |  %s", "MONTH:", "Number of movies:")
+count.each { |k,v| puts format("%30s |  %s", "#{k}", "#{v}")  }
 
 # Output results
 puts "\n\n5 longest movies:\n#{"*"*70}"
