@@ -4,7 +4,9 @@ require 'date'
 
 input = ARGV.first || "movies.txt" # in case of empty filename default file loads
 
-File.exist?(input) || abort("\n\nTHERE IS NO FILE NAMED: #{input}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
+unless File.exist?(input)
+  abort("\n\nTHERE IS NO FILE NAMED: #{input}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
+end
 
 # array with names of FIELDS
 FIELDS = %i[ link name year country release_date genre length rating director actors ]
