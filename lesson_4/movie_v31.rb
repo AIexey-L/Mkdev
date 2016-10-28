@@ -32,14 +32,14 @@ directors = array_of_ostructs.map(&:director).uniq.sort_by { |field| field.split
 # return number of non-USA movies
 number_of_nonusa = array_of_ostructs.reject { |field| field.country.include? ("USA")}.count
 
-array_dates = array_of_ostructs.reject { |field| field.release_date.to_s[8..9] == nil }.map { |field| Date.parse(field.release_date.to_s) }
-count = Hash.new(0)
-dates_stat = array_dates.map { |x| x.strftime ("%B") }.each { |x| count[x] += 1 }
-
-puts format("\n\n%30s |  %s", "MONTH:", "Number of movies:")
-count.each { |k,v| puts format("%30s |  %s", "#{k}", "#{v}")  }
+# pick all dates with revalent months and groups them by months, with names of months
+array_dates = array_of_ostructs.reject { |field| field.release_date.to_s[5..6] == nil }.map { |field| Date.strptime(field.release_date, "%Y-%m").strftime("%B") }.group_by { |x| x }
 
 # Output results
+
+puts format("\n\n%30s |  %s", "MONTH:", "Number of movies:")
+array_dates.each { |k,v| puts format("%30s |  %s", "#{k}", "#{v.count}")  }
+
 puts "\n\n5 longest movies:\n#{"*"*70}"
 nice_output(arr_five_longest)
 puts "\n\n10 most recent comedies\n#{"*"*70}"
