@@ -19,33 +19,48 @@ class MovieCollection
   
   
   def nice_output (arr)
-    arr.each { |field| puts "#{field.name} (#{field.release_date}; #{field.genre}) - #{field.length} "}
+    arr.each { |field| puts "#{field.name} (#{field.release_date}; #{field.country}; #{field.genre}) - #{field.length} "}
   end
 
   def all
     nice_output(@collection_array)
   end
 
-  # methods under construction
+  def sort_by (for_sorting)
+   # @for_sorting = for_sorting
+    @sorted = @collection_array.sort_by { |x| x[for_sorting] }
+    nice_output(@sorted)
+  end
 
-  # def sort_by (field)
-  #  nice_output(@collection_array.sort_by { |field| field})
-  # end
+  def filter (field_value)
+      @field = field_value.flatten[0]
+      @value = field_value.flatten[1]
+      @filtered = @collection_array.find_all { |x| x[@field].include?("#{@value}")}
+      nice_output(@filtered)
+  end
 
-  # def filter (field, value)
-  #   nice_output(@collection_array.find_all { |field| field.include?("#{value}")})
+  # method under construction
+
+  def stats(field)
+    @stats = @collection_array.find_all { |x| x[field]}.count
+    p @stats
   end
 
 end
 
 movies = MovieCollection.new
 
-# working methods:
+# working method calls:
 # movies.all
 
+# movies.sort_by(:country)
+# movies.sort_by(:name)
+# movies.sort_by(:release_date)
+
+# movies.filter(genre: 'Comedy')
+# movies.filter(country: 'Japan')
 
 
-# methods under construction:
-#movies.sort_by(:release_date)
+# method calls under construction:
 
-#movies.filter(:country, "USA")
+movies.stats(:director)
