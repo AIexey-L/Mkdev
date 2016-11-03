@@ -2,10 +2,12 @@ require 'csv'
 require 'ostruct'
 require 'date'
 
+# FIELDS = %i[ link name year country release_date genre length rating director actors ]
 
-FIELDS = %i[ link name year country release_date genre length rating director actors ]
 
 class MovieCollection
+
+  FIELDS = %i[ link name year country release_date genre length rating director actors ]
 
   attr_accessor(:filename, :collection_array) #:field) # :link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors)
 
@@ -19,14 +21,14 @@ class MovieCollection
   
   
   def nice_output (arr)
-    # arr.each { |field| puts "#{field.name} (#{field.release_date}; #{field.country}; #{field.genre}) - #{field.length} #{field.actors}"}
     arr.each { |field| puts format("%70s | %10s | %12s | %27s | %7s | %30s", "#{field.name}", "#{field.release_date}", "#{field.country}", "#{field.genre}", "#{field.length}", "#{field.actors}")}
 
   end
 
 
   def all
-    nice_output(@collection_array)
+    # nice_output(@collection_array)
+    @collection_array
   end
 
   def sort_by (for_sorting)
@@ -53,7 +55,7 @@ class MovieCollection
   end
 end
 
-movies = MovieCollection.new
+# movies = MovieCollection.new
 
 # working method calls:
 
