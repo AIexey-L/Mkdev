@@ -19,8 +19,11 @@ class MovieCollection
   
   
   def nice_output (arr)
-    arr.each { |field| puts "#{field.name} (#{field.release_date}; #{field.country}; #{field.genre}) - #{field.length} "}
+    # arr.each { |field| puts "#{field.name} (#{field.release_date}; #{field.country}; #{field.genre}) - #{field.length} #{field.actors}"}
+    arr.each { |field| puts format("%70s | %10s | %12s | %27s | %7s | %30s", "#{field.name}", "#{field.release_date}", "#{field.country}", "#{field.genre}", "#{field.length}", "#{field.actors}")}
+
   end
+
 
   def all
     nice_output(@collection_array)
@@ -42,8 +45,17 @@ class MovieCollection
   # method under construction
 
   def stats(field)
-    @stats = @collection_array.find_all { |x| x[field]}.count
-    p @stats
+
+
+    # @stats = @collection_array.map { |x| x[field]}.group_by { |x| x}
+    # @result = @stats.each { |k, v| @stats[k] = v.count}.sort_by { |k, v| v }.to_h
+
+
+    @stats = @collection_array.map { |x| x[field]}.group_by { |x| x}
+    @result = @stats.each { |k, v| @stats[k] = v.count}.sort_by { |k, v| v }.to_h
+
+    p @result
+    p @result.class
   end
 
 end
@@ -56,6 +68,8 @@ movies = MovieCollection.new
 # movies.sort_by(:country)
 # movies.sort_by(:name)
 # movies.sort_by(:release_date)
+# movies.sort_by(:length)
+# movies.sort_by(:actors)
 
 # movies.filter(genre: 'Comedy')
 # movies.filter(country: 'Japan')
@@ -63,4 +77,6 @@ movies = MovieCollection.new
 
 # method calls under construction:
 
-movies.stats(:director)
+# movies.stats(:director) # works for single attr
+movies.stats(:actors)
+
