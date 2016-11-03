@@ -30,39 +30,33 @@ class MovieCollection
   end
 
   def sort_by (for_sorting)
-   # @for_sorting = for_sorting
-    @sorted = @collection_array.sort_by { |x| x[for_sorting] }
-    nice_output(@sorted)
+    sorted = @collection_array.sort_by { |x| x[for_sorting] }
+    nice_output(sorted)
   end
 
   def filter (field_value)
-      @field = field_value.flatten[0]
-      @value = field_value.flatten[1]
-      @filtered = @collection_array.find_all { |x| x[@field].include?("#{@value}")}
-      nice_output(@filtered)
+      field = field_value.flatten[0]
+      value = field_value.flatten[1]
+      filtered = @collection_array.find_all { |x| x[field].include?("#{value}")}
+      nice_output(filtered)
   end
-
-  # method under construction
 
   def stats(field)
-
-
-    # @stats = @collection_array.map { |x| x[field]}.group_by { |x| x}
-    # @result = @stats.each { |k, v| @stats[k] = v.count}.sort_by { |k, v| v }.to_h
-
-
-    @stats = @collection_array.map { |x| x[field]}.group_by { |x| x}
-    @result = @stats.each { |k, v| @stats[k] = v.count}.sort_by { |k, v| v }.to_h
-
-    p @result
-    p @result.class
+    if field == :month
+      stats = @collection_array.reject { |field| field.release_date.to_s[5..6] == nil }.map { |field| Date.strptime(field.release_date, "%Y-%m").strftime("%B") }.group_by { |x| x }
+    elsif field == :year
+      stats = @collection_array.map { |field| Date.strptime(field.release_date, "%Y").strftime("%Y") }.group_by { |x| x }
+    else
+      stats = @collection_array.map { |x| x[field].to_s.split(",")}.flatten(1).group_by { |x| x}
+    end
+    puts stats.each { |k, v| stats[k] = v.count }.sort_by { |k, v| v }.to_h
   end
-
 end
 
 movies = MovieCollection.new
 
 # working method calls:
+
 # movies.all
 
 # movies.sort_by(:country)
@@ -74,9 +68,13 @@ movies = MovieCollection.new
 # movies.filter(genre: 'Comedy')
 # movies.filter(country: 'Japan')
 
+# movies.stats(:director)
+# movies.stats(:actors)
+# movies.stats(:genre)
+# movies.stats(:month)
+# movies.stats(:year)
+
 
 # method calls under construction:
 
-# movies.stats(:director) # works for single attr
-movies.stats(:actors)
 
