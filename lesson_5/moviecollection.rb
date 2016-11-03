@@ -36,12 +36,30 @@ class MovieCollection
     nice_output(sorted)
   end
 
-  def filter (field_value)
-      field = field_value.flatten[0]
-      value = field_value.flatten[1]
-      filtered = @collection_array.find_all { |x| x[field].include?("#{value}")}
-      nice_output(filtered)
+  # work for one key-value parameter
+
+  # def filter (field_value)
+  #     field = field_value.flatten[0]
+  #     value = field_value.flatten[1]
+  #     filtered = @collection_array.find_all { |x| x[field].include?("#{value}")}
+  #     nice_output(filtered)
+  # end
+
+  def filter (field_hash)
+    i=0
+    k = field_hash.count
+    p k
+    for_filter = @collection_array
+    while i < k*2
+      field = field_hash.flatten[ i ]
+      value = field_hash.flatten[ i + 1 ]
+      filtered = for_filter.find_all { |x| x[field].include?("#{value}")}
+      for_filter = filtered
+      i += 2
+    end
+    nice_output(filtered)
   end
+
 
   def stats(field)
     if field == :month
@@ -55,7 +73,7 @@ class MovieCollection
   end
 end
 
-# movies = MovieCollection.new
+movies = MovieCollection.new
 
 # working method calls:
 
@@ -67,7 +85,8 @@ end
 # movies.sort_by(:length)
 # movies.sort_by(:actors)
 
-# movies.filter(genre: 'Comedy')
+# movies.filter(genre: 'Comedy', actors: 'Charles Chaplin')
+# movies.filter(genre: 'Biography', actors: 'Robert De Niro')
 # movies.filter(country: 'Japan')
 
 # movies.stats(:director)
@@ -77,6 +96,5 @@ end
 # movies.stats(:year)
 
 
-# method calls under construction:
 
 

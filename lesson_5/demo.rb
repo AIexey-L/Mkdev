@@ -9,7 +9,7 @@ require '../lesson_5/moviecollection'
 movies = MovieCollection.new
 movie_class_inst = Movie.new(movies.all.first)
 
-# working method calls:
+# working method calls for MovieCollection class:
 
 # movies.all
 
@@ -21,6 +21,8 @@ movie_class_inst = Movie.new(movies.all.first)
 
 # movies.filter(genre: 'Comedy')
 # movies.filter(country: 'Japan')
+# movies.filter(genre: 'Comedy', actors: 'Charles Chaplin')
+# movies.filter(genre: 'Biography', actors: 'Robert De Niro')
 
 # movies.stats(:director)
 # movies.stats(:actors)
@@ -28,8 +30,11 @@ movie_class_inst = Movie.new(movies.all.first)
 # movies.stats(:month)
 # movies.stats(:year)
 
+# working method calls for Movie class
+
 # p movie_class_inst.has_genre?('Drama')
 # p movie_class_inst.has_genre?('Comedy')
+
 
 # p movie_class_inst.genre
 # p movie_class_inst.actors

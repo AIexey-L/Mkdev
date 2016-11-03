@@ -39,15 +39,15 @@ end
 
 
 
-movies = MovieCollection.new
-
-movie_class_inst = Movie.new(movies.all.first)
-
-# p movie_class_inst
-
-p movie_class_inst.has_genre?('Drama')
-# p movie_class_inst.has_genre?('Comedy')
+# movies = MovieCollection.new
 #
-# p movie_class_inst.genre
-# p movie_class_inst.actors
-# p movie_class_inst.length
+# movie_class_inst = Movie.new(movies.all.first)
+#
+# # p movie_class_inst
+#
+# p movie_class_inst.has_genre?('Drama')
+# # p movie_class_inst.has_genre?('Comedy')
+# #
+# # p movie_class_inst.genre
+# # p movie_class_inst.actors
+# # p movie_class_inst.length
