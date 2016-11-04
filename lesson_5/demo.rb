@@ -2,7 +2,7 @@ require 'csv'
 require 'ostruct'
 require 'date'
 require '../lesson_5/moviecollection'
-# require '../lesson_5/movie'
+require '../lesson_5/movie'
 
 
 
