@@ -11,7 +11,7 @@ movies = MovieCollection.new
 
 # working method calls for MovieCollection class:
 
-# p movies.all
+# p movies.all.first(20)
 
 # p movies.sort_by(:country).first(10)
 # p movies.sort_by(:name).first(10)
