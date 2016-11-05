@@ -7,7 +7,7 @@ require_relative './movie.rb'
 
 
 movies = MovieCollection.new
-movie_class_inst = Movie.new(movies.all.first)
+
 
 # working method calls for MovieCollection class:
 
@@ -32,14 +32,11 @@ movie_class_inst = Movie.new(movies.all.first)
 
 # working method calls for Movie class
 
-# p movie_class_inst.has_genre?('Drama')
-# p movie_class_inst.has_genre?('Comedy')
+# p movies.all.first.has_genre?('Drama')
+# p movies.all.first.has_genre?('Comedy')
 
 
-# p movie_class_inst.genre
-# p movie_class_inst.actors
-# p movie_class_inst.length
+# p movies.all.first.genre
+# p movies.all.first.actors
+# p movies.all.first.length
 
-# p movie_class_inst
-
-# p movie_class_inst.film
