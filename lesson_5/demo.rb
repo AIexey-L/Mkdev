@@ -1,8 +1,8 @@
 require 'csv'
 require 'ostruct'
 require 'date'
-require '../lesson_5/moviecollection'
-require '../lesson_5/movie'
+require_relative './moviecollection.rb'
+require_relative './movie.rb'
 
 
 
@@ -11,24 +11,24 @@ movie_class_inst = Movie.new(movies.all.first)
 
 # working method calls for MovieCollection class:
 
-# movies.all
+# p movies.all
 
-# movies.sort_by(:country)
-# movies.sort_by(:name)
-# movies.sort_by(:release_date)
-# movies.sort_by(:length)
-# movies.sort_by(:actors)
+# p movies.sort_by(:country).first(10)
+# p movies.sort_by(:name).first(10)
+# p movies.sort_by(:release_date).first(10)
+# p movies.sort_by(:length).first(10)
+# p movies.sort_by(:actors).first(10)
 
-# movies.filter(genre: 'Comedy')
-# movies.filter(country: 'Japan')
-# movies.filter(genre: 'Comedy', actors: 'Charles Chaplin')
-# movies.filter(genre: 'Biography', actors: 'Robert De Niro')
+# p movies.filter(genre: 'Comedy')
+# p movies.filter(country: 'Japan')
+# p movies.filter(genre: 'Comedy', actors: 'Charles Chaplin')
+# p movies.filter(genre: 'Biography', actors: 'Robert De Niro')
 
-# movies.stats(:director)
-# movies.stats(:actors)
-# movies.stats(:genre)
-# movies.stats(:month)
-# movies.stats(:year)
+# p movies.stats(:director)
+# p movies.stats(:actors)
+# p movies.stats(:genre)
+# p movies.stats(:month)
+# p movies.stats(:year)
 
 # working method calls for Movie class
 
@@ -39,3 +39,7 @@ movie_class_inst = Movie.new(movies.all.first)
 # p movie_class_inst.genre
 # p movie_class_inst.actors
 # p movie_class_inst.length
+
+# p movie_class_inst
+
+# p movie_class_inst.film
