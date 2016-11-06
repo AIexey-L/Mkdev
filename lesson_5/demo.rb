@@ -34,9 +34,13 @@ movies = MovieCollection.new
 
 # p movies.all.first.has_genre?('Drama')
 # p movies.all.first.has_genre?('Comedy')
-
+# p movies.all.first.has_genre?('Non-existent genre')
 
 # p movies.all.first.genre
 # p movies.all.first.actors
 # p movies.all.first.length
 
+
+# p MovieCollection.new.all.map { |x| x.genre.to_s.split(",") }.flatten(1).uniq.include?("Fantasy")
+
+# p movies.genre_collection
