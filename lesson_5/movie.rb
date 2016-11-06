@@ -12,10 +12,11 @@ class Movie
   end
 
   def has_genre? (genre)
-      if @genre_collection.include?("#{genre}")
-          @genre.include?(genre)
-      else
-        puts "Warning! There is no such genre as #{genre}"
+    begin
+      raise ArgumentError unless @genre_collection.include?("#{genre}")
+        @genre.include?(genre)
+      rescue ArgumentError
+        puts "\n\nWarning! There is no such genre as #{genre}\n\n Available genres are: #{@genre_collection}"
       end
   end
 end

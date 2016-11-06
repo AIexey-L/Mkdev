@@ -11,7 +11,7 @@ movies = MovieCollection.new
 
 # working method calls for MovieCollection class:
 
-# p movies.all.first(20)
+p movies.all.first(20)
 
 # p movies.sort_by(:country).first(10)
 # p movies.sort_by(:name).first(10)
@@ -34,7 +34,7 @@ movies = MovieCollection.new
 
 # p movies.all.first.has_genre?('Drama')
 # p movies.all.first.has_genre?('Comedy')
-# p movies.all.first.has_genre?('Non-existent genre')
+p movies.all.first.has_genre?('Non-existent genre')
 
 # p movies.all.first.genre
 # p movies.all.first.actors

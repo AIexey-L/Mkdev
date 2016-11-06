@@ -15,7 +15,8 @@ class MovieCollection
       abort("\n\nTHERE IS NO FILE NAMED: #{filename}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
     end
     genre_array = CSV.foreach(@filename, col_sep: "|", headers: FIELDS).map { |x| x[:genre].to_s.split(",")}.flatten(1).uniq
-    @collection_array = CSV.foreach(@filename, col_sep: "|", headers: FIELDS).map { |x| Movie.new(x.to_h)}.each { |x| x.instance_variable_set('@genre_collection', genre_array) }
+    @collection_array = CSV.foreach(@filename, col_sep: "|", headers: FIELDS).map { |x| Movie.new(x.to_h)}.each { |x| x.genre_collection = genre_array }
+
   end
 
   def all
