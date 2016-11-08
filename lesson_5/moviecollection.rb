@@ -24,16 +24,12 @@ class MovieCollection
   end
 
   def sort_by (for_sorting)
-    sorted = @collection_array.sort_by { |x| x.send(for_sorting) }
+    sorted = @collection_array.sort_by(&for_sorting)
   end
 
+
   def filter (field_hash)
-    n = @collection_array
-     field_hash.each do |k,v|
-       m = n.find_all { |x| x.send(k).include?("#{v}")}
-       n = m
-     end
-     n
+    field_hash.reduce(@collection_array) { |result, (k, v)| result.find_all {|x| x.send(k).include?(v)}}
   end
 
   def stats(field)
