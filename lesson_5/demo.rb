@@ -11,9 +11,10 @@ movies = MovieCollection.new
 
 # working method calls for MovieCollection class:
 
-# p movies.all.first(20)
+# movies.all.each { |x| p x.output }
 
-p movies.sort_by(:country).first(10)
+p movies.all
+# p movies.sort_by(:country).first
 # p movies.sort_by(:name).first(10)
 # p movies.sort_by(:release_date).first(10)
 # p movies.sort_by(:length).first(10)
@@ -37,7 +38,7 @@ p movies.sort_by(:country).first(10)
 # p movies.all.first.has_genre?('Non-existent genre')
 
 # p movies.all.first.genre
-# p movies.all.first.actors
+# p movies.all.actors
 # p movies.all.first.length
 
 
