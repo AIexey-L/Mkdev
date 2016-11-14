@@ -14,8 +14,7 @@ class MovieCollection
     unless File.exist?(@filename)
       abort("\n\nTHERE IS NO FILE NAMED: #{filename}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
     end
-    collection_array_raw = CSV.foreach(@filename, col_sep: "|", headers: FIELDS).map { |x| Movie.new(x.to_h)}
-    @collection_array  = collection_array_raw.each { |x| x.film_collection = collection_array_raw }
+    @collection_array = CSV.foreach(@filename, col_sep: "|", headers: FIELDS).map { |x| Movie.new(self, x.to_h)}
   end
 
   def all

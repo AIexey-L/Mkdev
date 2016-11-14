@@ -10,7 +10,7 @@ class Movie
 
   attr_accessor :link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors, :film_collection, :month
 
-  def initialize (film)
+  def initialize (film_collection, film)
     film.each { |k,v| instance_variable_set("@#{k}", v) }
   end
 
