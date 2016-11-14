@@ -3,25 +3,35 @@ require 'ostruct'
 require 'date'
 require_relative './moviecollection.rb'
 
+class InvalidGenreError < StandardError
+end
+
 class Movie
 
-  attr_accessor :link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors, :film_collection
+  attr_accessor :link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors, :film_collection, :month
 
   def initialize (film)
     film.each { |k,v| instance_variable_set("@#{k}", v) }
   end
 
-  def output
-    "#{@link} #{@name} #{@year} #{@country} #{@release_date} #{@genre} #{@length} #{@rating} #{@director} #{@actors}"
+  def inspect
+    format("| %50s | %10s | %12s | %27s | %7s | %3s | %23s | %s", "#{@name}", "#{@release_date}", "#{@country}", "#{@genre}", "#{@length}", "#{@rating}", "#{@director}", "#{@actors}\n")
+  end
+
+  def year
+    @year = Date.strptime(@release_date, "%Y").strftime("%Y")
+  end
+
+  def month
+    if @release_date.to_s[6..7] != nil
+     @month = Date.strptime(@release_date, "%Y-%m").strftime("%B")
+    end
   end
 
   def has_genre? (genre)
-    begin
-      raise ArgumentError unless @genre_collection.include?(genre)
+   raise InvalidGenreError until @film_collection.map  { |x| x.genre.to_s.split(",")}.flatten(1).uniq.include?(genre)
         @genre.include?(genre)
-      rescue ArgumentError
-        puts "\n\nWarning! There is no such genre as #{genre}\n\n Available genres are: #{@genre_collection}"
-      end
   end
 end
+
 

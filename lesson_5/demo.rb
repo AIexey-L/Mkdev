@@ -5,7 +5,7 @@ require_relative './moviecollection.rb'
 require_relative './movie.rb'
 
 
-
+begin
 movies = MovieCollection.new
 
 
@@ -13,11 +13,11 @@ movies = MovieCollection.new
 
 # movies.all.each { |x| p x.output }
 
-p movies.all
+# p movies.all
 # p movies.sort_by(:country).first
-# p movies.sort_by(:name).first(10)
+# p movies.sort_by(:name).first(10).inspect
 # p movies.sort_by(:release_date).first(10)
-# p movies.sort_by(:length).first(10)
+# p movies.sort_by(:length)
 # p movies.sort_by(:actors).first(10)
 
 # p movies.filter(genre: 'Comedy')
@@ -35,13 +35,14 @@ p movies.all
 
 # p movies.all.first.has_genre?('Drama')
 # p movies.all.first.has_genre?('Comedy')
-# p movies.all.first.has_genre?('Non-existent genre')
+p movies.all.first.has_genre?('Non-existent genre')
 
 # p movies.all.first.genre
-# p movies.all.actors
+# p movies.all.first.actors
 # p movies.all.first.length
 
+rescue InvalidGenreError
+  puts "\n\nWarning! There is no such genre in collection! \n\n Please, enter correct genre\n\n"
+  # raise
 
-# p MovieCollection.new.all.map { |x| x.genre.to_s.split(",") }.flatten(1).uniq.include?("Fantasy")
-
-# p movies.genre_collection
+end
