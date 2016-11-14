@@ -12,14 +12,14 @@ movies = MovieCollection.new
 # working method calls for MovieCollection class:
 
 
-# p movies.all
+# p movies.all.first
 # p movies.sort_by(:country).first
 # p movies.sort_by(:name).first(10)
 # p movies.sort_by(:release_date).first(10)
 # p movies.sort_by(:length)
 # p movies.sort_by(:actors).first(10)
 
-p movies.filter(genre: 'Comedy')
+# p movies.filter(genre: 'Comedy')
 # p movies.filter(country: 'Japan')
 # p movies.filter(genre: 'Comedy', actors: 'Charles Chaplin')
 # p movies.filter(genre: 'Biography', actors: 'Robert De Niro')
