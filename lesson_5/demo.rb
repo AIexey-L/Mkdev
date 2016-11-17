@@ -11,7 +11,6 @@ movies = MovieCollection.new
 
 # working method calls for MovieCollection class:
 
-
 # p movies.all.first
 # p movies.sort_by(:country).first
 # p movies.sort_by(:name).first(10)
@@ -40,8 +39,8 @@ movies = MovieCollection.new
 # p movies.all.first.actors
 # p movies.all.first.length
 
-rescue InvalidGenreError
-  puts "\n\nWarning! There is no such genre in collection! \n\n Please, enter correct genre\n\n"
+rescue InvalidGenreError => e
+  puts "\n\nInvalidGenreError: genre #{e.wrong_genre} is not found!\n\n Please, enter correct genre\n\n"
   # raise
 
 end

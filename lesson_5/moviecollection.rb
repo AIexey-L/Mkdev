@@ -3,11 +3,11 @@ require 'ostruct'
 require 'date'
 require_relative './movie.rb'
 
-FIELDS = %i[ link name year country release_date genre length rating director actors film_collection month]
+FIELDS = %i[ link name year country release_date genre length rating director actors film_collection month ]
 
 class MovieCollection
 
-  attr_accessor(:filename, :collection_array)
+  attr_accessor(:filename, :collection_array, :genre_collection)
 
   def initialize(filename = 'movies.txt')
     @filename = filename
@@ -15,6 +15,7 @@ class MovieCollection
       abort("\n\nTHERE IS NO FILE NAMED: #{filename}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
     end
     @collection_array = CSV.foreach(@filename, col_sep: "|", headers: FIELDS).map { |x| Movie.new(self, x.to_h)}
+    @genre_collection = @collection_array.map  { |x| x.genre.to_s.split(",")}.flatten(1).uniq
   end
 
   def all
@@ -27,6 +28,10 @@ class MovieCollection
 
   def filter (field_hash)
     field_hash.reduce(@collection_array) { |result, (k, v)| result.find_all {|x| x.send(k).include?(v)}}
+  end
+
+  def genre_exist?(genre)
+    @genre_collection.include?(genre)
   end
 
   def stats(field)
