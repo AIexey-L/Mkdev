@@ -15,7 +15,9 @@ class MovieCollection
       abort("\n\nTHERE IS NO FILE NAMED: #{filename}, PLEASE, ENTER VALID FILENAME.\nIF NO VALID FILENAME WILL BE ENTERED, PROGRAM WILL BE STARTED\n  WITH DEFAULT FILE: movies.txt\n\n")
     end
     @collection_array = CSV.foreach(@filename, col_sep: "|", headers: FIELDS).map { |x| Movie.new(self, x.to_h)}
-    @genre_collection = @collection_array.map  { |x| x.genre.to_s.split(",")}.flatten(1).uniq
+    # @genre_collection = @collection_array.map  { |x| x.genre.to_s.split(",")}.flatten(1).uniq
+    @genre_collection = @collection_array.map  { |x| x.genre}.flatten(1).uniq
+
   end
 
   def all
@@ -27,7 +29,9 @@ class MovieCollection
   end
 
   def filter (field_hash)
-    field_hash.reduce(@collection_array) { |result, (k, v)| result.find_all {|x| x.send(k).include?(v)}}
+    field_hash.each_with_object({}) { ||}
+
+    field_hash.reduce(@collection_array) { |result, (k, v)| result.find_all {|x| x.send(k).include?(v.to_s)}}
   end
 
   def genre_exist?(genre)
@@ -35,7 +39,9 @@ class MovieCollection
   end
 
   def stats(field)
-    stats = @collection_array.map { |x| x.send(field).to_s.split(",")}.flatten(1).group_by { |x| x}
+    stats = @collection_array.map { |x| x.send(field)}.flatten(1).group_by { |x| x}
+
+    # stats = @collection_array.map { |x| x.send(field).to_s.split(",")}.flatten(1).group_by { |x| x}
     stats.each { |k, v| stats[k] = v.count }.sort_by { |k, v| v }.to_h
   end
 end

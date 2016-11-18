@@ -11,10 +11,11 @@ movies = MovieCollection.new
 
 # working method calls for MovieCollection class:
 
+  # p movies.genre_collection.class
 # p movies.all.first
 # p movies.sort_by(:country).first
 # p movies.sort_by(:name).first(10)
-# p movies.sort_by(:release_date).first(10)
+# p movies.sort_by(:release_date)
 # p movies.sort_by(:length)
 # p movies.sort_by(:actors).first(10)
 
@@ -22,8 +23,13 @@ movies = MovieCollection.new
 # p movies.filter(country: 'Japan')
 # p movies.filter(genre: 'Comedy', actors: 'Charles Chaplin')
 # p movies.filter(genre: 'Biography', actors: 'Robert De Niro')
+# p movies.filter(year: 2010..2014)
+#  p movies.filter(year: 2013)
 
-# p movies.stats(:director)
+
+
+
+p movies.stats(:director)
 # p movies.stats(:actors)
 # p movies.stats(:genre)
 # p movies.stats(:month)
@@ -34,13 +40,13 @@ movies = MovieCollection.new
 # p movies.all.first.has_genre?('Drama')
 # p movies.all.first.has_genre?('Comedy')
 # p movies.all.first.has_genre?('Non-existent genre')
-
+# rescue ArgumentError => e
+#   p e
+#
+#
 # p movies.all.first.genre
 # p movies.all.first.actors
 # p movies.all.first.length
 
-rescue InvalidGenreError => e
-  puts "\n\nInvalidGenreError: genre #{e.wrong_genre} is not found!\n\n Please, enter correct genre\n\n"
-  # raise
 
 end

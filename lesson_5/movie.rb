@@ -3,13 +3,6 @@ require 'ostruct'
 require 'date'
 require_relative './moviecollection.rb'
 
-class InvalidGenreError < StandardError
-  attr_reader :wrong_genre
-  def initialize(genre)
-    @wrong_genre = genre
-  end
-end
-
 class Movie
 
   attr_accessor :link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors, :collection, :month
@@ -17,6 +10,8 @@ class Movie
   def initialize (film_collection, film)
     film.each { |k,v| instance_variable_set("@#{k}", v) }
     @collection = film_collection
+    @genre = @genre.to_s.split(",")
+    @actors = @actors.to_s.split(",")
   end
 
   def inspect
@@ -24,7 +19,7 @@ class Movie
   end
 
   def year
-    @year = Date.strptime(@release_date, "%Y").strftime("%Y")
+    Date.strptime(@release_date, "%Y").strftime("%Y")
   end
 
   def month
@@ -34,9 +29,14 @@ class Movie
   end
 
   def has_genre? (genre)
-   raise InvalidGenreError.new(genre) unless @collection.genre_exist?(genre)
-        @genre.include?(genre)
+      raise ArgumentError, "Genre \"#{genre}\" do not exist in collection" unless @collection.genre_exist?(genre)
+      @genre.include?(genre)
   end
+
+    # def has_genre? (genre)
+  #  raise InvalidGenreError.new(genre) unless @collection.genre_exist?(genre)
+  #       @genre.include?(genre)
+  # end
 end
 
 
