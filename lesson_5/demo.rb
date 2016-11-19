@@ -25,11 +25,11 @@ movies = MovieCollection.new
 # p movies.filter(genre: 'Biography', actors: 'Robert De Niro')
 # p movies.filter(year: 2010..2014)
 #  p movies.filter(year: 2013)
+# p movies.filter(genre: /(comedy|drama)/i)
 
 
 
-
-p movies.stats(:director)
+# p movies.stats(:director)
 # p movies.stats(:actors)
 # p movies.stats(:genre)
 # p movies.stats(:month)

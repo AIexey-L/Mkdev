@@ -5,13 +5,15 @@ require_relative './moviecollection.rb'
 
 class Movie
 
-  attr_accessor :link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors, :collection, :month
+  attr_accessor :link, :name, :year, :country, :release_date, :genre, :length, :rating, :director, :actors, :collection, :month, :release_year
 
   def initialize (film_collection, film)
     film.each { |k,v| instance_variable_set("@#{k}", v) }
     @collection = film_collection
     @genre = @genre.to_s.split(",")
     @actors = @actors.to_s.split(",")
+    @release_year = @release_date.to_s[0..3].to_i
+    # @year = Date.strptime(@release_date.to_s[0..3], "%Y").strftime("%Y")
   end
 
   def inspect
@@ -19,13 +21,20 @@ class Movie
   end
 
   def year
-    Date.strptime(@release_date, "%Y").strftime("%Y")
+    @release_year
+    # @year =  Date.strptime(@release_date, "%Y").strftime("%Y")
   end
 
   def month
     if @release_date.to_s[6..7] != nil
      @month = Date.strptime(@release_date, "%Y-%m").strftime("%B")
     end
+  end
+
+  def match? (filter_name, filter_value)
+
+    /#{filter_value}/ === send(filter_name).to_s
+    # send(filter_name).to_s === /#{filter_value}/
   end
 
   def has_genre? (genre)

@@ -3,7 +3,7 @@ require 'ostruct'
 require 'date'
 require_relative './movie.rb'
 
-FIELDS = %i[ link name year country release_date genre length rating director actors film_collection month ]
+FIELDS = %i[ link name year country release_date genre length rating director actors collection month ]
 
 class MovieCollection
 
@@ -29,9 +29,8 @@ class MovieCollection
   end
 
   def filter (field_hash)
-    field_hash.each_with_object({}) { ||}
-
-    field_hash.reduce(@collection_array) { |result, (k, v)| result.find_all {|x| x.send(k).include?(v.to_s)}}
+    field_hash.reduce(@collection_array) { |result, (k, v)| result.find_all {|x| x.match?(k,v)}}
+    # field_hash.reduce(@collection_array) { |result, (k, v)| result.find_all {|x| x.send(k).include?(v.to_s)}}
   end
 
   def genre_exist?(genre)
