@@ -23,7 +23,7 @@ movies = MovieCollection.new
 # p movies.filter(country: 'Japan')
 # p movies.filter(genre: 'Comedy', actors: 'Charles Chaplin')
 # p movies.filter(genre: 'Biography', actors: 'Robert De Niro')
-# p movies.filter(year: 2010..2014)
+# p movies.filter(year: 2012..2014)
 #  p movies.filter(year: 2013)
 # p movies.filter(genre: /(comedy|drama)/i)
 
