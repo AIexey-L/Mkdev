@@ -32,8 +32,9 @@ class Movie
   end
 
   def match? (filter_name, filter_value)
-
-    /#{filter_value}/ === send(filter_name).to_s
+    # filter_name === send(filter_value)
+    filter_value === send(filter_name)
+    # /#{filter_value}/ === send(filter_name).to_s
     # send(filter_name).to_s === /#{filter_value}/
   end
 
