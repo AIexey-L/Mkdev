@@ -12,7 +12,7 @@ movies = MovieCollection.new
 # working method calls for MovieCollection class:
 
   # p movies.genre_collection.class
-# p movies.all.first
+ p movies.all.first
 # p movies.sort_by(:country).first
 # p movies.sort_by(:name).first(10)
 # p movies.sort_by(:release_date)
@@ -25,7 +25,7 @@ movies = MovieCollection.new
 # p movies.filter(genre: 'Biography', actors: 'Robert De Niro')
 # p movies.filter(year: 2012..2014)
 #  p movies.filter(year: 2013)
-# p movies.filter(genre: /(comedy|drama)/i)
+# p movies.filter(genre: /(Comedy|Adventure)/i)
 
 
 

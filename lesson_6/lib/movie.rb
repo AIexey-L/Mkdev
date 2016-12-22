@@ -16,7 +16,7 @@ class Movie
   end
 
   def inspect
-    format("| %50s | %10s | %12s | %27s | %7s | %3s | %23s | %s", "#{@name}", "#{@release_date}", "#{@country}", "#{@genre}", "#{@length}", "#{@rating}", "#{@director}", "#{@actors}\n")
+    format(" %50s | %10s | %12s | %27s | %7s | %3s | %23s | %s", "#{@name}", "#{@release_date}", "#{@country}", "#{@genre}", "#{@length}", "#{@rating}", "#{@director}", "#{@actors}\n")
   end
 
   def year
@@ -44,4 +44,21 @@ class Movie
 
 end
 
+class NewMovie < Movie
+  #(2000 по сегодняшний день): 
+  #«Название — новинка, вышло N лет назад!
+end
 
+class ModernMovie < Movie
+  #(1968-2000): «Название — современное кино: 
+  #играют Шварценеггер, Шарон Стоун»
+end
+
+class ClassicMovie < Movie
+  #(1945-1968): «Название — классический фильм, режиссёр такой-то 
+  #(ещё 10 его фильмов в спике)»require
+end
+
+class AncientMovie < Movie
+  #(фильм 1900-1945): «Название — старый фильм (1936 год)»;
+end
